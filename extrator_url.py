@@ -1,14 +1,15 @@
 import re
+from typing import Union
 
 class ExtratorURL:
     def __init__(self, url):
         self.url = self.sanitiza_url(url)
         self.valida_url()
 
-    def sanitiza_url(self, url):
+    def sanitiza_url(self, url: str) -> str:
         return url.strip()
     
-    def valida_url(self):
+    def valida_url(self) -> None:
         if not self.url:
             raise ValueError('A URL está vazia.')
         
@@ -17,17 +18,17 @@ class ExtratorURL:
         if not match:
             raise ValueError('A URL não é válida')
         
-    def get_url_base(self):
+    def get_url_base(self) -> str:
         indice_interrogacao = self.url.find('?')
         url_base = self.url[:indice_interrogacao]
         return url_base
 
-    def get_url_parametros(self):
+    def get_url_parametros(self) -> str:
         indice_interrogacao = self.url.find('?')
         url_parametros = self.url[indice_interrogacao+1:]
         return url_parametros
     
-    def get_valor_parametro(self, parametro_busca):
+    def get_valor_parametro(self, parametro_busca: str) -> Union[int, float, str]:
         indice_parametro = self.get_url_parametros().find(parametro_busca)
         indice_valor = indice_parametro + len(parametro_busca) + 1
 
@@ -39,7 +40,20 @@ class ExtratorURL:
         
         return valor
     
+    def __len__(self) -> int:
+        return len(self.url)
+    
+    def __str__(self) -> str:
+        return self.url + '\n' + 'Base da URL: ' + self.get_url_base() + '\n' + 'Parâmetros da URL: ' + self.get_url_parametros()
+    
+    def __eq__(self, other: object) -> bool:
+        return self.url == other.url
+    
 url = "bytebank.com/cambio?quantidade=100&moedaOrigem=real&moedaDestino=dolar"
 extrator_url = ExtratorURL(url)
+extrator_url_2 = ExtratorURL(url)
+print('O tamanho da URL é: ', len(extrator_url))
+print('URL completa: ', extrator_url)
+print('extrator_url == extrator_url_2? ', extrator_url == extrator_url_2)
 valor_quantidade = extrator_url.get_valor_parametro("quantidade")
-print(valor_quantidade)
+print("Valor do parâmetro 'quantitadade': ", valor_quantidade)
