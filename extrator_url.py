@@ -1,5 +1,4 @@
 import re
-from typing import Union
 
 class ExtratorURL:
     """
@@ -24,7 +23,7 @@ class ExtratorURL:
         get_url_parametros(self) -> str:
             Obtém a parte dos parâmetros da URL após o primeiro '?'.
 
-        get_valor_parametro(self, parametro_busca: str) -> Union[int, float, str]:
+        get_valor_parametro(self, parametro_busca: str) -> str:
             Obtém o valor associado ao parâmetro especificado em parametro_busca.
 
         __len__(self) -> int:
@@ -64,7 +63,7 @@ class ExtratorURL:
         url_parametros = self.url[indice_interrogacao+1:]
         return url_parametros
     
-    def get_valor_parametro(self, parametro_busca: str) -> Union[int, float, str]:
+    def get_valor_parametro(self, parametro_busca: str) -> str:
         indice_parametro = self.get_url_parametros().find(parametro_busca)
         indice_valor = indice_parametro + len(parametro_busca) + 1
 
