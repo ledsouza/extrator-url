@@ -2,7 +2,43 @@ import re
 from typing import Union
 
 class ExtratorURL:
-    def __init__(self, url):
+    """
+    Classe para extrair informações de uma URL válida do Bytebank.
+
+    Atributos:
+        url (str): A URL a ser processada.
+
+    Métodos:
+        __init__(self, url: str) -> None:
+            Inicializa um objeto ExtratorURL com a URL fornecida e a valida.
+
+        sanitiza_url(self, url: str) -> str:
+            Remove espaços em branco antes e depois da URL.
+
+        valida_url(self) -> None:
+            Valida se a URL fornecida é válida, seguindo o padrão esperado da URL do Bytebank.
+
+        get_url_base(self) -> str:
+            Obtém a parte base da URL antes do primeiro '?'.
+
+        get_url_parametros(self) -> str:
+            Obtém a parte dos parâmetros da URL após o primeiro '?'.
+
+        get_valor_parametro(self, parametro_busca: str) -> Union[int, float, str]:
+            Obtém o valor associado ao parâmetro especificado em parametro_busca.
+
+        __len__(self) -> int:
+            Retorna o tamanho da URL.
+
+        __str__(self) -> str:
+            Retorna uma representação em string do objeto ExtratorURL com a URL completa,
+            a base da URL e os parâmetros da URL.
+
+        __eq__(self, other: object) -> bool:
+            Verifica se dois objetos ExtratorURL são iguais, comparando suas URLs.
+    """
+
+    def __init__(self, url: str):
         self.url = self.sanitiza_url(url)
         self.valida_url()
 
